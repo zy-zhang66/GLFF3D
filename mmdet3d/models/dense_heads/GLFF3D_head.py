@@ -884,7 +884,7 @@ class CAHeadOffsetNoAug(CAHeadIter):
     
 
 @HEADS.register_module()
-class Fcaf3DNeckWithHead_my(nn.Module):
+class GLFF3DNeckWithHead(nn.Module):
     def __init__(self,
                  n_classes,
                  in_channels,
@@ -907,7 +907,7 @@ class Fcaf3DNeckWithHead_my(nn.Module):
                      loss_weight=1.0),
                  train_cfg=None,
                  test_cfg=None):
-        super(Fcaf3DNeckWithHead_my, self).__init__()
+        super(GLFF3DNeckWithHead, self).__init__()
         self.voxel_size = voxel_size
         self.yaw_parametrization = yaw_parametrization
         self.assigner = build_assigner(assigner)
