@@ -56,7 +56,7 @@ This code is part of the manuscript currently under submission to The Visual Com
 
 ```
 @article{,
-  title={Enhanced 3D Object Detection via Global-Local Feature Fusion in Point Clouds and Images},
+  title={Enhanced 3D Object Detection via Global-Local Feature Fusion Network in Point Clouds and Images},
   author={Du, Haishun and Zhang, Zhengyang and Zhang, Wenzhe and Cao, Linbing},
   journal={},
   pages={},
