@@ -52,7 +52,7 @@ python tools/test.py configs/GLFF3D/base.py \
 
 ## 5. Citation
 
-Please kindly cite this paper in your publications if it helps your research:
+This code is part of the manuscript currently under submission to The Visual Computer.Please kindly cite this paper in your publications if it helps your research:
 
 ```
 @article{,
