@@ -1,4 +1,4 @@
-# Enhanced 3D Object Detection via Global-Local Feature Fusion in Point Clouds and Images
+# Enhanced 3D Object Detection via Global-Local Feature Fusion Network in Point Clouds and Images
 
 ## Main Results
 
@@ -6,7 +6,7 @@ This one is what we get on the sunrgbd dataset.
 
 |        Method        | Point Backbone | Input  |   mAP@0.25    |    mAP@0.5    |
 | :------------------: | :------------: | :----: | :-----------: | :-----------: |
-| GFLL3D(FCAF3D based) |    HDResNet    | PC+RGB | 69.14 (69.08) | 50.77 (50.64) |
+| GLFF3D(FCAF3D based) |    HDResNet    | PC+RGB | 69.14 (69.08) | 50.77 (50.64) |
 
 ## 1. Prerequisites
 
