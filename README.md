@@ -42,7 +42,7 @@ python tools/test.py configs/GLFF3D/base.py \
 
 ## 4. Visualization
 
-Visualizations can be created with test.py script. 
+Visualizations can be created with `test.py` script. 
 
 ```bash
 python tools/test.py configs/GLFF3D/base.py \
