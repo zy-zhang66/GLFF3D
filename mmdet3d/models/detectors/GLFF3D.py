@@ -34,24 +34,24 @@ class LayerNorm(nn.Module):
             return x
 
 
-# convolutional channel mixer (CCM)
-class CCM(nn.Module):
+# convolutional channel mixer (CC)
+class CC(nn.Module):
     def __init__(self, dim, growth_rate=2.0):
         super().__init__()
         hidden_dim = int(dim * growth_rate)
 
-        self.ccm = nn.Sequential(
+        self.CC = nn.Sequential(
             nn.Conv2d(dim, hidden_dim, 3, 1, 1),
             nn.GELU(),
             nn.Conv2d(hidden_dim, dim, 1, 1, 0)
         )
 
     def forward(self, x):
-        return self.ccm(x)
+        return self.CC(x)
 
 
-# spatially-adaptive feature modulation (SAFM)
-class SAFM(nn.Module):
+# spatially-adaptive feature modulation (SA)
+class SA(nn.Module):
     def __init__(self, dim, n_levels=4):
         super().__init__()
         self.n_levels = n_levels
@@ -85,18 +85,17 @@ class SAFM(nn.Module):
         out = self.aggr(torch.cat(out, dim=1))
         out = self.act(out) * x
         return out
-# 定义 FMM 模块
-class FMM(nn.Module):
+class GMFE(nn.Module):
     def __init__(self, dim, ffn_scale=2.0):
         super().__init__()
         self.norm1 = LayerNorm(dim)
         self.norm2 = LayerNorm(dim)
-        self.safm = SAFM(dim)
-        self.ccm = CCM(dim, ffn_scale)
+        self.SA = SA(dim)
+        self.CC = CC(dim, ffn_scale)
 
     def forward(self, x):
-        x = self.safm(self.norm1(x)) + x
-        x = self.ccm(self.norm2(x)) + x
+        x = self.SA(self.norm1(x)) + x
+        x = self.CC(self.norm2(x)) + x
         return x
 @DETECTORS.register_module()
 class SingleStageSparse3DDetector(Base3DDetector):
@@ -178,11 +177,11 @@ class SingleStageSparse3DDetector_CA(Base3DDetector):
         self.voxel_size = voxel_size
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
-        # Initialize FMM modules for each scale
-        self.fmm1 = FMM(dim=256)  # Assuming the feature dimension is 256, adjust as necessary
-        self.fmm2 = FMM(dim=256)
-        self.fmm3 = FMM(dim=256)
-        self.fmm4 = FMM(dim=256)
+        # Initialize GFME modules for each scale
+        self.GFME1 = GFME(dim=256)  # Assuming the feature dimension is 256, adjust as necessary
+        self.GFME2 = GFME(dim=256)
+        self.GFME3 = GFME(dim=256)
+        self.GFME4 = GFME(dim=256)
 
         self.fuse_img_features = None  
 
@@ -276,11 +275,11 @@ class SingleStageSparse3DDetector_CA(Base3DDetector):
             x = self.img_neck(x)
         #
         x = list(x)  
-        # Apply FMM to each feature scale
-        x[0] = self.fmm1(x[0])  # (8, 256, 100, 140)
-        x[1] = self.fmm2(x[1])  # (8, 256, 50, 70)
-        x[2] = self.fmm3(x[2])  # (8, 256, 25, 35)
-        x[3] = self.fmm4(x[3])  # (8, 256, 13, 18)
+        # Apply GFME to each feature scale
+        x[0] = self.GFME1(x[0])  # (8, 256, 100, 140)
+        x[1] = self.GFME2(x[1])  # (8, 256, 50, 70)
+        x[2] = self.GFME3(x[2])  # (8, 256, 25, 35)
+        x[3] = self.GFME4(x[3])  # (8, 256, 13, 18)
         x = tuple(x)
         
 
