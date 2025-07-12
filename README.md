@@ -25,7 +25,7 @@ conda activate glff
 
 ## 2. Joint Training.
 
-To start training, run dist_train.sh with `GLFF3D` configs:
+To start training, run `dist_train.sh` with `GLFF3D` configs:
 
 ```shell
 bash tools/dist_train.sh configs/GLFF3D/base.py 2
@@ -33,7 +33,7 @@ bash tools/dist_train.sh configs/GLFF3D/base.py 2
 
 ## 3. Testing
 
-Test pre-trained model using dist_test with `GLFF3D` configs:
+Test pre-trained model using `dist_test.sh` with `GLFF3D` configs:
 
 ```bash
 python tools/test.py configs/GLFF3D/base.py \
